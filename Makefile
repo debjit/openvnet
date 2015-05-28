@@ -59,7 +59,7 @@ build-rpm-vnet: install-bundle clean-bundle
 
 build-rpm-vnet-dev: install-bundle clean-bundle
 	(cd $(CURDIR)/deployment/packagebuild; bundle install --path vendor/bundle --binstubs)
- 	$(CURDIR)/deployment/packagebuild/build_packages_vnet.sh all -dev
+	$(CURDIR)/deployment/packagebuild/build_packages_vnet.sh all -dev
 
 build-rpm-third-party:
 	(cd $(CURDIR)/deployment/packagebuild; bundle install --path vendor/bundle --binstubs)
