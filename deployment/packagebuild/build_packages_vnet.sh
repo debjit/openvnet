@@ -14,6 +14,11 @@ fpm_cook_cmd=${fpm_cook_cmd:-${current_dir}/bin/fpm-cook}
 possible_archs="i386 noarch x86_64"
 build_time=$(echo ${BUILD_ID:-$(date +%Y%m%d%H%M%S)} | sed -e 's/[^0-9]//g')
 
+[[ $- =~ dev ]] || {
+  build_time=${build_time}-dev
+}
+
+
 function build_all_packages(){
   find ${current_dir}/packages.d/vnet -mindepth 1 -maxdepth 1 -type d | while read line; do
     build_package $(basename ${line})
@@ -54,11 +59,12 @@ mkdir -p ${work_dir}/packages.d/vnet
 
 check_repo
 
-if [[ -n ${package} ]]; then
+if [[ -n ${package} && 'all' != ${package} ]]; then
   build_package ${package}
 else
   build_all_packages
 fi
+
 
 (cd ${repo_dir}; createrepo .)
 
